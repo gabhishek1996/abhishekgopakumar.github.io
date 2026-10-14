@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abhishek Gopakumar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: single left-aligned column on a cool paper ground; sections open with SQL-comment eyebrows; case studies use a Before / After / Impact ledger. */
+:root{
+  --bg:#f2f4f7; --surface:#ffffff; --ink:#14213a; --muted:#56627a; --line:#d5dbe5;
+  --accent:#2148b8; --accent-soft:#e3e9f8; --amber:#b5650d;
+  --display:"Archivo",ui-sans-serif,system-ui,sans-serif;
+  --body:"Public Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1522; --surface:#172034; --ink:#e6ebf4; --muted:#9aa6bd; --line:#2a3550;
+  --accent:#86a5ff; --accent-soft:#1f2c4d; --amber:#f0a75a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1522; --surface:#172034; --ink:#e6ebf4; --muted:#9aa6bd; --line:#2a3550;
+  --accent:#86a5ff; --accent-soft:#1f2c4d; --amber:#f0a75a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto;padding-block:56px 72px;display:flex;flex-direction:column;gap:88px}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.02em;margin-bottom:14px}
+h2{font-size:clamp(28px,4vw,40px);font-weight:750;font-stretch:112%;letter-spacing:-.01em}
+.lede{color:var(--muted);max-width:62ch;margin-top:14px}
+
+/* Hero */
+.hero{display:flex;flex-direction:column;gap:22px}
+.hero h1{font-size:clamp(44px,8.4vw,92px);font-weight:800;font-stretch:118%;letter-spacing:-.02em;line-height:.98}
+.role{font-family:var(--mono);font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 14px}
+.role span+span::before{content:"/";margin-right:14px;color:var(--line)}
+.hero .summary{font-size:clamp(17px,2vw,20px);max-width:58ch}
+.contact{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font:600 14px var(--body);border:1px solid var(--accent);background:var(--accent);color:var(--bg);padding:10px 16px;border-radius:6px;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--accent)}
+.email{font-family:var(--mono);font-size:14px;user-select:all;padding:9px 12px;border:1px dashed var(--line);border-radius:6px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:2px solid var(--ink);margin-top:18px}
+.metric{padding:18px 18px 4px 0;display:flex;flex-direction:column;gap:6px}
+.metric+.metric{padding-left:18px;border-left:1px solid var(--line)}
+.metric b{font-family:var(--display);font-weight:800;font-stretch:115%;font-size:clamp(36px,5vw,54px);line-height:1;font-variant-numeric:tabular-nums}
+.metric span{font-size:14px;color:var(--muted)}
+@media (max-width:720px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .metric:nth-child(3){border-left:0;padding-left:0}.metric:nth-child(n+3){border-top:1px solid var(--line)}}
+
+/* About */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:40px}
+.about .text{display:flex;flex-direction:column;gap:14px;max-width:64ch}
+@media (max-width:760px){.about{grid-template-columns:1fr;gap:18px}}
+
+.sectors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:30px}
+.sector{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.sector .when{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.sector h3{font-size:20px;font-weight:750;font-stretch:108%}
+.sector p{font-size:15px;color:var(--muted)}
+@media (max-width:820px){.sectors{grid-template-columns:1fr}}
+/* Skills */
+.skills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 36px;margin-top:30px}
+.skills h3{font-size:17px;font-weight:700;font-stretch:105%;margin-bottom:8px}
+.skills p{color:var(--muted);font-size:15px}
+@media (max-width:820px){.skills{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.skills{grid-template-columns:1fr}}
+
+/* Process */
+.process{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));counter-reset:s}
+.process li{counter-increment:s;padding:16px 14px 0 0;border-top:2px solid var(--line);position:relative;min-width:0}
+.process li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:12px;color:var(--accent);display:block;margin-bottom:8px}
+.process li::after{content:"";position:absolute;top:-6px;left:0;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.process b{display:block;font-family:var(--display);font-size:15.5px;font-weight:700;line-height:1.25;margin-bottom:6px}
+.process span{font-size:14px;color:var(--muted);display:block}
+@media (max-width:900px){.process{grid-template-columns:1fr;gap:0}
+  .process li{border-top:0;border-left:2px solid var(--line);padding:0 0 22px 22px}
+  .process li::after{top:2px;left:-6px}}
+
+/* Case studies */
+.cases{display:flex;flex-direction:column;gap:28px;margin-top:30px}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:clamp(20px,3.4vw,36px);display:flex;flex-direction:column;gap:22px}
+.case header{display:flex;flex-direction:column;gap:6px}
+.case .where{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.case h3{font-size:clamp(22px,2.8vw,28px);font-weight:750;font-stretch:108%}
+.ledger{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.ledger>div{min-width:0}
+.ledger h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ledger .impact h4{color:var(--amber)}
+.ledger ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+@media (max-width:820px){.ledger{grid-template-columns:1fr}}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+.meta b{color:var(--ink);font-weight:600}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:12px;background:var(--accent-soft);color:var(--ink);padding:3px 8px;border-radius:4px}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;font-size:14px}
+.flow div{flex:1 1 130px;border:1px solid var(--line);border-radius:6px;padding:10px 12px;background:var(--bg);display:flex;flex-direction:column;gap:2px;min-width:0}
+.flow b{font-family:var(--display);font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.flow span{color:var(--muted);font-size:13px}
+.flow i{align-self:center;font-style:normal;color:var(--accent);font-family:var(--mono)}
+@media (max-width:620px){.flow i{display:none}}
+.minor{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+@media (max-width:820px){.minor{grid-template-columns:1fr}}
+.minor .ledger{grid-template-columns:1fr;gap:14px}
+
+/* Projects */
+.projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px;margin-top:24px}
+.proj{padding:20px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px;min-width:0}
+.proj .when{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.proj h3{font-size:18px;font-weight:700;font-stretch:104%}
+.proj p{font-size:15px}
+.proj .pub{font-size:13.5px;color:var(--amber);font-style:italic}
+@media (max-width:760px){.projects{grid-template-columns:1fr}}
+
+/* Timeline */
+.cv{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;margin-top:24px}
+.cv h3.col{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.entry{padding:16px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:3px}
+.entry b{font-family:var(--display);font-size:17px;font-weight:700}
+.entry span{font-size:14.5px;color:var(--muted)}
+.entry .d{font-family:var(--mono);font-size:12.5px}
+@media (max-width:760px){.cv{grid-template-columns:1fr;gap:28px}}
+
+/* Contact */
+.cta{border-top:2px solid var(--ink);padding-top:36px;display:flex;flex-direction:column;gap:18px}
+.cta h2{font-size:clamp(34px,6vw,60px);font-stretch:118%}
+footer{font-size:13px;color:var(--muted)}
+.toast{font-family:var(--mono);font-size:13px;color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.btn{transition:transform .15s}.btn:hover{transform:translateY(-1px)}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="hero" id="top">
+  <div class="role"><span>Data Analyst &amp; BI Developer</span><span>Power BI · SQL · Python · Data Engineering</span><span>Birmingham, UK</span></div>
+  <h1>Abhishek<br>Gopakumar</h1>
+  <p class="summary">I turn data from many source systems into reporting and analysis people can trust, in whatever sector it comes from. Nearly five years across insurance and financial services, NHS healthcare and retail banking, covering the full lifecycle from pipelines and data models to dashboards, forecasts and clear recommendations.</p>
+  <div class="contact">
+    <a class="btn" href="https://linkedin.com/in/abhishekgopakumar" target="_blank" rel="noopener">LinkedIn</a>
+    <span class="email" id="email">gabhishek1996@gmail.com</span>
+    <button class="btn ghost" id="copy" type="button">Copy email</button>
+    <span class="toast" id="toast" aria-live="polite"></span>
+  </div>
+  <div class="metrics">
+    <div class="metric"><b>17+</b><span>Power BI dashboards delivered</span></div>
+    <div class="metric"><b>3</b><span>sectors: insurance, healthcare, banking</span></div>
+    <div class="metric"><b>15</b><span>recurring manual reports automated</span></div>
+    <div class="metric"><b>140+</b><span>governed DAX measures in one model</span></div>
+  </div>
+</header>
+
+<section class="about" id="about">
+  <div><p class="eyebrow">-- about</p><h2>Reliable numbers first, then the story behind them</h2></div>
+  <div class="text">
+    <p>The sector changes; the craft does not. Whether the data describes insurance policies, hospital waiting lists or bank customers, I start by asking what decision the work needs to support. That shapes which sources I bring in, how I model the data and which measures matter.</p>
+    <p>Most of my effort goes into making the data dependable: combining sources with SQL and Python, building dimensional models, and putting reconciliation checks in place so problems are caught before anything is published. When figures move unexpectedly, I trace them back through the source records and transformation logic until I can explain why.</p>
+    <p>I currently work at HLPartnership on mortgage, protection and general insurance data. Before that I spent two years at an NHS Foundation Trust and started my career at IndusInd Bank. I hold an MSc in Advanced Computer Science from the University of Liverpool and an ILM Level 5 in Leadership and Management.</p>
+  </div>
+</section>
+
+<section id="sectors">
+  <p class="eyebrow">-- sectors</p>
+  <h2>Three sectors, one way of working</h2>
+  <div class="sectors">
+    <div class="sector"><span class="when">2025 – present · UK</span><h3>Insurance &amp; financial services</h3><p>Mortgage, protection, general insurance and commission data across 6 source systems. 7 dashboards, a 140+ measure model and reconciliation controls.</p></div>
+    <div class="sector"><span class="when">2023 – 2025 · UK</span><h3>NHS healthcare</h3><p>Patient activity, waiting lists and service performance across 5 clinical services. 10 dashboards, a Trust-wide warehouse and executive forecasting.</p></div>
+    <div class="sector"><span class="when">2019 – 2020 · India</span><h3>Retail banking</h3><p>Customer, branch and product portfolio data across 120+ high-volume datasets, 3 branches and 15 product categories.</p></div>
+  </div>
+</section>
+
+<section id="skills">
+  <p class="eyebrow">-- skills</p>
+  <h2>Toolkit</h2>
+  <div class="skills">
+    <div><h3>Business intelligence</h3><p>Power BI, semantic models, Advanced DAX, Power Query M, Row-Level Security, drill-through, Advanced Excel, VBA</p></div>
+    <div><h3>SQL and data engineering</h3><p>SQL Server, SSMS, SSIS, CTEs, window functions, staging tables, query optimisation, ETL pipelines</p></div>
+    <div><h3>Data platforms</h3><p>Microsoft Fabric Lakehouse, Dataflows Gen2, Snowflake, version control and CI/CD</p></div>
+    <div><h3>Modelling and data quality</h3><p>Kimball dimensional modelling, star schema, fact, dimension and bridge tables, reconciliation, validation, exception reporting, root-cause analysis</p></div>
+    <div><h3>Analytics and machine learning</h3><p>Python (Pandas, NumPy), forecasting, scenario modelling, TensorFlow, convolutional neural networks, reinforcement learning</p></div>
+    <div><h3>Ways of working</h3><p>Requirements gathering, stakeholder management across clinical, commercial, finance and executive teams, Agile delivery, Jira, mentoring junior analysts</p></div>
+  </div>
+</section>
+
+<section id="process">
+  <p class="eyebrow">-- process</p>
+  <h2>How I build analytics, end to end</h2>
+  <ol class="process">
+    <li><b>Requirements</b><span>Agree the decision, the audience and the measures that matter.</span></li>
+    <li><b>Sources</b><span>Map how each system records the same activity.</span></li>
+    <li><b>Transformation</b><span>Combine, reshape and validate data in SQL and Python.</span></li>
+    <li><b>Modelling</b><span>Build star schemas and single, governed measure definitions.</span></li>
+    <li><b>Reporting</b><span>Design dashboards around the questions people ask.</span></li>
+    <li><b>Reconciliation</b><span>Check outputs against source before every release.</span></li>
+    <li><b>Improvement</b><span>Automate manual steps and investigate unexpected movements.</span></li>
+  </ol>
+</section>
+
+<section id="work">
+  <p class="eyebrow">-- case studies</p>
+  <h2>Selected work</h2>
+  <div class="cases">
+
+    <article class="case">
+      <header>
+        <span class="where">HLPartnership · Mortgage, protection &amp; general insurance · 2025 – present</span>
+        <h3>One trusted view of insurance performance</h3>
+      </header>
+      <div class="flow" aria-label="Data flow">
+        <div><b>6</b><span>source systems</span></div><i>→</i>
+        <div><b>Fabric</b><span>Lakehouse pipelines</span></div><i>→</i>
+        <div><b>12</b><span>fact &amp; dimension tables</span></div><i>→</i>
+        <div><b>140+</b><span>DAX measures</span></div><i>→</i>
+        <div><b>7</b><span>dashboards, 15 reports automated</span></div>
+      </div>
+      <div class="ledger">
+        <div><h4>Before</h4><ul>
+          <li>Policy, adviser and firm data spread across 6 source systems</li>
+          <li>15 recurring reports produced by hand</li>
+          <li>Calculations for conversion and commission not standardised</li>
+        </ul></div>
+        <div><h4>After</h4><ul>
+          <li>Repeatable pipelines in Power Query M, Dataflows Gen2 and Fabric Lakehouse</li>
+          <li>Star-schema model with 140+ governed DAX measures</li>
+          <li>SQL and Excel reconciliation controls across 4 reporting areas</li>
+        </ul></div>
+        <div class="impact"><h4>Impact</h4><ul>
+          <li>7 Power BI dashboards with Row-Level Security, replacing 15 manual reports</li>
+          <li>Every report draws on one consistent dataset</li>
+          <li>Discrepancies caught before publication, not after</li>
+        </ul></div>
+      </div>
+      <div class="meta"><span><b>My role:</b> owned end to end, from requirements to deployment</span>
+        <div class="tags"><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">Microsoft Fabric</span></div></div>
+    </article>
+
+    <article class="case">
+      <header>
+        <span class="where">Robert Jones and Agnes Hunt Orthopaedic Hospital NHS Foundation Trust · 2023 – 2025</span>
+        <h3>A Trust-wide data warehouse and self-service clinical reporting</h3>
+      </header>
+      <div class="ledger">
+        <div><h4>Before</h4><ul>
+          <li>Clinical and operational data held in separate source systems</li>
+          <li>KPI reporting relied on Excel and VBA workflows</li>
+        </ul></div>
+        <div><h4>After</h4><ul>
+          <li>18-month greenfield warehouse with SQL Server models and SSIS pipelines</li>
+          <li>Kimball dimensional models and reusable semantic models</li>
+          <li>Patient-level records linked across 25 datasets using validated identifiers</li>
+        </ul></div>
+        <div class="impact"><h4>Impact</h4><ul>
+          <li>10 Power BI dashboards across 5 clinical services</li>
+          <li>Self-service access to activity, waiting list and performance data</li>
+          <li>5 priority data products delivered in agreed Agile cycles</li>
+        </ul></div>
+      </div>
+      <div class="meta"><span><b>My role:</b> leading role in the warehouse build; dashboard and model design</span>
+        <div class="tags"><span class="tag">SQL Server</span><span class="tag">SSIS</span><span class="tag">Power BI</span><span class="tag">Python</span></div></div>
+    </article>
+
+    <div class="minor">
+      <article class="case">
+        <header><span class="where">NHS Foundation Trust · Executive &amp; finance teams</span><h3>Demand and workforce scenario modelling</h3></header>
+        <div class="ledger">
+          <div><h4>What I built</h4><ul><li>Forecasting and scenario models with clearly stated assumptions</li></ul></div>
+          <div class="impact"><h4>Impact</h4><ul><li>Informed decisions on service demand, workforce requirements and financial planning</li></ul></div>
+        </div>
+      </article>
+      <article class="case">
+        <header><span class="where">IndusInd Bank · 2019 – 2020</span><h3>High-volume banking analytics</h3></header>
+        <div class="ledger">
+          <div><h4>What I built</h4><ul><li>SQL pipelines and ETL across 120+ banking datasets</li><li>Customer and portfolio models for 3 branches and 15 product categories</li></ul></div>
+          <div class="impact"><h4>Impact</h4><ul><li>Faster processing and more accurate management reporting</li><li>Coached 3 junior analysts</li></ul></div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<section id="projects">
+  <p class="eyebrow">-- research</p>
+  <h2>Projects and publications</h2>
+  <div class="projects">
+    <div class="proj"><span class="when">May 2022 – Oct 2022 · University of Liverpool</span><h3>DoubleTech: preventing DDoS attacks in cloud environments</h3><p>MSc dissertation. A container-based prevention mechanism that maps web-server HTTP sessions to back-end SQL queries to detect and block malicious traffic, built in Java with MySQL.</p></div>
+    <div class="proj"><span class="when">Jul 2021 – Nov 2021</span><h3>Automatic personality recognition in asynchronous video interviews</h3><p>A TensorFlow deep-learning model that predicts candidates’ personality traits from recorded video interviews.</p></div>
+    <div class="proj"><span class="when">Nov 2017 – Mar 2018</span><h3>Vibradiction: an emotion-based music player</h3><p>Facial-expression recognition with convolutional neural networks and OpenCV, classifying seven emotions and playing a matching playlist.</p><span class="pub">Published in the International Journal of Scientific and Engineering Research, March 2018</span></div>
+    <div class="proj"><span class="when">Jun 2018 – Nov 2018</span><h3>Self-driven car</h3><p>A simulated autonomous car in Python that learns to navigate from sensor inputs and rewards using deep Q-learning.</p><span class="pub">Published in the International Journal of Advance Research and Innovative Ideas in Education, Vol. 4, Issue 2, 2018</span></div>
+  </div>
+</section>
+
+<section id="experience">
+  <p class="eyebrow">-- experience</p>
+  <h2>Experience and education</h2>
+  <div class="cv">
+    <div>
+      <h3 class="col">Experience</h3>
+      <div class="entry"><span class="d">Jul 2025 – present</span><b>Data Analyst</b><span>HLPartnership Limited, Alcester</span></div>
+      <div class="entry"><span class="d">Jun 2023 – Jun 2025</span><b>Senior Information Systems Analyst</b><span>Robert Jones and Agnes Hunt Orthopaedic Hospital NHS Foundation Trust, Oswestry</span></div>
+      <div class="entry"><span class="d">May 2019 – Sep 2020</span><b>Business Intelligence Analyst</b><span>IndusInd Bank, Chennai</span></div>
+    </div>
+    <div>
+      <h3 class="col">Education</h3>
+      <div class="entry"><span class="d">2020 – 2022</span><b>MSc Advanced Computer Science</b><span>University of Liverpool · Vice-Chancellor’s International Attainment Scholarship</span></div>
+      <div class="entry"><span class="d">2015 – 2019</span><b>BTech Computer Science and Engineering</b><span>SRM Institute of Science and Technology</span></div>
+      <h3 class="col" style="margin-top:22px">Certifications</h3>
+      <div class="entry"><span class="d">2025</span><b>ILM Level 5, Leadership and Management</b></div>
+      <div class="entry"><span class="d">2024</span><b>Python for Data Science and Machine Learning</b><span>Udemy</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <p class="eyebrow">-- contact</p>
+  <h2>Let’s talk</h2>
+  <p class="lede">Open to data analyst, BI and analytics roles in any sector. The quickest way to reach me is by email or LinkedIn.</p>
+  <div class="contact">
+    <span class="email">gabhishek1996@gmail.com</span>
+    <a class="btn" href="https://linkedin.com/in/abhishekgopakumar" target="_blank" rel="noopener">Connect on LinkedIn</a>
+  </div>
+  <footer>© Abhishek Gopakumar</footer>
+</section>
+
+</div>
+
+<script>
+document.getElementById('copy').addEventListener('click',function(){
+  var t=document.getElementById('toast'),addr='gabhishek1996@gmail.com';
+  function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('email'));var s=getSelection();s.removeAllRanges();s.addRange(r);t.textContent='Selected. Press Ctrl+C to copy';}
+  try{navigator.clipboard.writeText(addr).then(function(){t.textContent='Copied';},fallback);}catch(e){fallback();}
+});
+</script>
+</body>
+</html>
